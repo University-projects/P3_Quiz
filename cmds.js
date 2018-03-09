@@ -161,17 +161,11 @@ exports.testCmd = (rl, id) => {
 			quiz.answer = quiz.answer.toLowerCase();
 
 			if(a === quiz.answer){
-				log('Su respuesta es : ');
 				log('Su respuesta es correcta.');
-				log('correcto');
-				log('CORRECTO');
-				biglog('CORRECTA', 'green');
+				biglog('Correcta', 'green');
 			}else{
-				log('Su respuesta es : ');
 				log('Su respuesta es incorrecta.');
-				log('correcto');
-				log('CORRECTO');
-				biglog('INCORRECTA', 'red');
+				biglog('Incorrecta', 'red');
 			}
 		});	
 	})
@@ -202,8 +196,9 @@ exports.playCmd = rl => {
 		const playOne = () => {
 
 			if(toBeSolved.length < 1){
-				log(colorize('No hay más preguntas que responder','red'));
-				log(`PUNTUACIÓN : ${score} PUNTOS`);
+				log(colorize('No hay nada más que preguntar.'));
+				log(`Fin del juego. Aciertos: ${score}`);
+				biglog(score);
 				rl.prompt();
 			}else{
 				var len = toBeSolved.length;
@@ -221,23 +216,13 @@ exports.playCmd = rl => {
 						
 					if(a === quiz.answer){
 						score++;
-						log('Su respuesta es : ');
-						log('CORRECTO');
-						log('correcto');
-						log('correcta');
-						biglog('CORRECTA', 'green');
-						log(`HA CONSEGUIDO : ${score} PUNTOS `);
+						log('CORRECTO-Lleva ${score} aciertos');
 						toBeSolved.splice(index,1);
-						log(toBeSolved);
 						playOne();
 					}else{
-						log('INCORRECTO');
-						log('INCORRECTA');
-						log('incorrecto');
-						log('incorrecta');
-+						log('Fin del juego')
-						biglog('GAME OVER', 'red');
-						log(`PUNTUACIÓN : ${score} PUNTOS `);
+						log('INCORRECTO.');
++						log(`Fin del juego. Aciertos: ${score} `);
+						biglog(score);
 						rl.prompt();
 					}
 
