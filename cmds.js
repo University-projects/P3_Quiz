@@ -35,11 +35,13 @@ const validateId = id => {
 	return new Sequelize.Promise((resolve, reject) => {
 
 		if(typeof id === "undefined"){
-			reject(new Error(`Falta el parametro <id>.`));
+			errorlog(`Falta el parámetro id.`)
+			//reject(new Error('Falta el parametro <id>.'));
 		} else {
 			id = parseInt(id);
 			if (Number.isNaN(id)){
-				reject(new Error(`El parametro <id> no es un número.`));
+				errorlog('El valor del parámetro id no es válido.')
+				//reject(new Error('El valor del parámetro id no es válido.'));
 			}else{
 				resolve(id);
 			}
@@ -216,7 +218,7 @@ exports.playCmd = rl => {
 						
 					if(a === quiz.answer){
 						score++;
-						log('CORRECTO-Lleva ${score} aciertos');
+						log(`CORRECTO-Lleva ${score} aciertos`);
 						toBeSolved.splice(index,1);
 						playOne();
 					}else{
