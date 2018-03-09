@@ -174,7 +174,7 @@ exports.testCmd = (rl, id) => {
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-		errorlog(error.message);
+
 	})
 	.then(()=>{
 		rl.prompt;
@@ -237,7 +237,7 @@ exports.playCmd = rl => {
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-		errorlog(error.message);
+
 	});
 };	
 
