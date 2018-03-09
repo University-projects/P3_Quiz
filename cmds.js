@@ -162,11 +162,11 @@ exports.testCmd = (rl, id) => {
 
 			if(a === quiz.answer){
 				log('Su respuesta es : ');
-				log('Su respuesta es correcta.');
+				log('Su respuesta es correcta correcto.');
 				biglog('CORRECTA', 'green');
 			}else{
 				log('Su respuesta es : ');
-				log('Su respuesta es incorrecta');
+				log('Su respuesta es incorrecta incorrecto');
 				biglog('INCORRECTA', 'red');
 			}
 		});	
@@ -176,7 +176,7 @@ exports.testCmd = (rl, id) => {
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-		
+		errorlog(error.message);
 	})
 	.then(()=>{
 		rl.prompt;
@@ -226,6 +226,7 @@ exports.playCmd = rl => {
 						playOne();
 					}else{
 						log('INCORRECTO');
+						log('INCORRECTA');
 +						log('Fin del juego')
 						biglog('GAME OVER', 'red');
 						log(`PUNTUACIÓN : ${score} PUNTOS `);
@@ -243,7 +244,7 @@ exports.playCmd = rl => {
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-
+		errorlog(error.message);
 	});
 };	
 
