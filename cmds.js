@@ -35,12 +35,12 @@ const validateId = id => {
 	return new Sequelize.Promise((resolve, reject) => {
 
 		if(typeof id === "undefined"){
-			errorlog(`Falta el parámetro id.`)
+			errorlog(`Falta el parámetro id.`);
 			//reject(new Error('Falta el parametro <id>.'));
 		} else {
 			id = parseInt(id);
 			if (Number.isNaN(id)){
-				errorlog('El valor del parámetro id no es válido.')
+				errorlog('El valor del parámetro id no es válido.');
 				//reject(new Error('El valor del parámetro id no es válido.'));
 			}else{
 				resolve(id);
@@ -57,7 +57,7 @@ exports.showCmd = (rl, id) => {
 	.then(id => models.quiz.findById(id))
 	.then(quiz => {
 		if(!quiz) {
-			throw new Error(`No existe un quiz asociado al id=${id}.`)
+			throw new Error(`No existe un quiz asociado al id=${id}.`);
 		}
 		log(`[${colorize(quiz.id, 'magenta')}]: ${quiz.question} ${colorize('=>','magenta')} ${quiz.answer}`);
 	})
