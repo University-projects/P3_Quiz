@@ -162,9 +162,11 @@ exports.testCmd = (rl, id) => {
 
 			if(a === quiz.answer){
 				log('Su respuesta es : ');
+				log('Su respuesta es correcta.');
 				biglog('CORRECTA', 'green');
 			}else{
 				log('Su respuesta es : ');
+				log('Su respuesta es incorrecta');
 				biglog('INCORRECTA', 'red');
 			}
 		});	
@@ -185,6 +187,7 @@ exports.playCmd = rl => {
 		
 	let score = 0;
 	let toBeSolved = [];
+	let indexAux = [];
 
 	models.quiz.findAll()
 	.each(quiz => {
@@ -200,9 +203,9 @@ exports.playCmd = rl => {
 				rl.prompt();
 			}else{
 				var len = toBeSolved.length;
-				let id = Math.floor(Math.random() * len);
-				validateId(id)
-				.then(id => toBeSolved[id])
+				let index = Math.floor(Math.random() * len);
+				validateId(index)
+				.then(id => toBeSolved[index])
 				.then(quiz => {
 					if(!quiz){
 						throw new Error(`No existe un quiz asociado al id=${id}.`);
@@ -215,16 +218,19 @@ exports.playCmd = rl => {
 					if(a === quiz.answer){
 						score++;
 						log('Su respuesta es : ');
+						log('CORRECTO');
 						biglog('CORRECTA', 'green');
 						log(`HA CONSEGUIDO : ${score} PUNTOS `);
+						toBeSolved.splice(index,1);
+						log(toBeSolved);
 						playOne();
 					}else{
+						log('INCORRECTO');
++						log('Fin del juego')
 						biglog('GAME OVER', 'red');
 						log(`PUNTUACIÓN : ${score} PUNTOS `);
 						rl.prompt();
 					}
-
-					toBeSolved.splice(id,1);
 
 					});
 				});	
