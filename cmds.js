@@ -35,11 +35,11 @@ const validateId = id => {
 	return new Sequelize.Promise((resolve, reject) => {
 
 		if(typeof id === "undefined"){
-			reject(new Error('Falta el parametro <id>.'));
+			reject(new Error(`Falta el parametro <id>.`));
 		} else {
 			id = parseInt(id);
 			if (Number.isNaN(id)){
-				reject(new Error('El valor del parámetro id no es válido.'));
+				reject(new Error(`El valor del parámetro id no es válido.`));
 			}else{
 				resolve(id);
 			}
@@ -69,7 +69,7 @@ exports.showCmd = (rl, id) => {
 
 const makeQuestion = (rl, text) => {
 	return new Sequelize.Promise((resolve, reject) => {
-		rl.question(colorize(text, 'red'),answer => {
+		rl.question(colorize(text, 'red'), answer => {
 			resolve(answer.trim());
 		});
 	});
@@ -89,12 +89,12 @@ exports.addCmd = rl => {
 	.then(quiz => {
 		log(`${colorize('Se ha añadido magenta', 'magenta')}: ${quiz.question} ${colorize('=>','magenta')} ${quiz.answer}`);
 	})
-	.catch(Sequelize.validationError, error => {
+	.catch(Sequelize.ValidationError, error => {
 		errorlog('El quiz es erroneo.');
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-		
+		errorlog(error.message);
 	})
 	.then(()=>{
 		rl.prompt();
@@ -137,15 +137,15 @@ exports.editCmd = (rl, id) => {
 	.then(quiz => {
 		log(`Ha cambiado el quiz ${colorize(quiz.id, 'magenta')} por: ${quiz.question} ${colorize('=>','magenta')} ${quiz.answer}`);
 	})
-	.catch(Sequelize.validationError, error => {
+	.catch(Sequelize.ValidationError, error => {
 		errorlog('El quiz es erroneo.');
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-	
+		errorlog(error.message);
 	})
 	.then(()=>{
-		rl.prompt;
+		rl.prompt();
 	});
 };
 exports.testCmd = (rl, id) => {
@@ -167,15 +167,15 @@ exports.testCmd = (rl, id) => {
 			}
 		});	
 	})
-	.catch(Sequelize.validationError, error => {
+	.catch(Sequelize.ValidationError, error => {
 		errorlog('El quiz es erroneo.');
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-
+		errorlog(error.message);
 	})
 	.then(()=>{
-		rl.prompt;
+		rl.prompt();
 	});
 };
 
@@ -216,7 +216,7 @@ exports.playCmd = rl => {
 						toBeSolved.splice(index,1);
 						playOne();
 					}else{
-						log(`Respuesra incorrecta.Fin del juego. Aciertos: ${score}`);
+						log(`Respuesta incorrecta.Fin del juego. Aciertos: ${score}`);
 						rl.prompt();
 					}
 
@@ -226,12 +226,12 @@ exports.playCmd = rl => {
 		};
 		playOne();		
 	})
-	.catch(Sequelize.validationError, error => {
+	.catch(Sequelize.ValidationError, error => {
 		errorlog('El quiz es erroneo.');
 		error.errors.forEach(({message}) => errorlog(message));
 	})
 	.catch(error => {
-
+		errorlog(error.message);
 	});
 };	
 
