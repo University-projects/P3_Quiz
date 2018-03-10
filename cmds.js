@@ -35,13 +35,11 @@ const validateId = id => {
 	return new Sequelize.Promise((resolve, reject) => {
 
 		if(typeof id === "undefined"){
-			errorlog(`Falta el parámetro id.`);
-			//reject(new Error('Falta el parametro <id>.'));
+			reject(new Error('Falta el parametro <id>.'));
 		} else {
 			id = parseInt(id);
 			if (Number.isNaN(id)){
-				errorlog('El valor del parámetro id no es válido.');
-				//reject(new Error('El valor del parámetro id no es válido.'));
+				reject(new Error('El valor del parámetro id no es válido.'));
 			}else{
 				resolve(id);
 			}
@@ -164,10 +162,8 @@ exports.testCmd = (rl, id) => {
 
 			if(a === quiz.answer){
 				log('Su respuesta es correcta.');
-				biglog('Correcta', 'green');
 			}else{
 				log('Su respuesta es incorrecta.');
-				biglog('Incorrecta', 'red');
 			}
 		});	
 	})
@@ -198,9 +194,7 @@ exports.playCmd = rl => {
 		const playOne = () => {
 
 			if(toBeSolved.length < 1){
-				log(colorize('No hay nada más que preguntar.'));
-				log(`Fin del juego. Aciertos: ${score}`);
-				biglog(score);
+				log(colorize(`No hay nada más que preguntar.Fin del juego. Aciertos: ${score}`));
 				rl.prompt();
 			}else{
 				var len = toBeSolved.length;
@@ -218,13 +212,11 @@ exports.playCmd = rl => {
 						
 					if(a === quiz.answer){
 						score++;
-						log(`CORRECTO-Lleva ${score} aciertos`);
+						log(`Respuesta correcta. Lleva ${score} aciertos`);
 						toBeSolved.splice(index,1);
 						playOne();
 					}else{
-						log('INCORRECTO.');
-+						log(`Fin del juego. Aciertos: ${score} `);
-						biglog(score);
+						log(`Respuesra incorrecta.Fin del juego. Aciertos: ${score}`);
 						rl.prompt();
 					}
 
